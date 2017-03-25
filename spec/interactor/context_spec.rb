@@ -16,7 +16,7 @@ module Interactor
       end
 
       it "doesn't affect the original hash" do
-        hash = {foo: "bar"}
+        hash = { foo: "bar" }
         context = Context.build(hash)
 
         expect(context).to be_a(Context)
@@ -137,16 +137,10 @@ module Interactor
         }.from("bar").to("baz")
       end
 
-      it "raises failure" do
+      it "throws :early_return" do
         expect {
           context.fail!
-        }.to raise_error(Failure)
-      end
-
-      it "makes the context available from the failure" do
-        context.fail!
-      rescue Failure => error
-        expect(error.context).to eq(context)
+        }.to throw_symbol(:early_return)
       end
     end
 
